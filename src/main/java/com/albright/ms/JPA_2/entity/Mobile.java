@@ -39,7 +39,6 @@ public class Mobile {
     @Column(name = "mobile_name")
     private String mobileName;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "mobile")
     Set<App> apps = new HashSet<>();
 
@@ -51,6 +50,5 @@ public class Mobile {
     public void addNewApp(App app) {
         apps.add(app);
     }
-
 
 }
