@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -27,5 +26,9 @@ public class App {
 
     public App(String appName) {
         this.appName = appName;
+    }
+
+    public void assignMobile(Mobile mobile) {
+        this.mobile = mobile;
     }
 }

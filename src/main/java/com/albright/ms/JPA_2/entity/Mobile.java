@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -39,8 +38,9 @@ public class Mobile {
     @Column(name = "mobile_name")
     private String mobileName;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "mobile")
-    Set<App> apps = new HashSet<>();
+    private Set<App> apps = new HashSet<>();
 
     public Mobile(String mobileCompany, String mobileName) {
         this.mobileCompany = mobileCompany;
@@ -48,7 +48,8 @@ public class Mobile {
     }
 
     public void addNewApp(App app) {
-        apps.add(app);
+        this.apps.add(app);
     }
 
-}
+    }
+

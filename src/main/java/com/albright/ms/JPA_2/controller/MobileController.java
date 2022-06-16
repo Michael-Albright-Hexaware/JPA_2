@@ -2,10 +2,13 @@ package com.albright.ms.JPA_2.controller;
 
 import com.albright.ms.JPA_2.entity.Mobile;
 import com.albright.ms.JPA_2.service.MobileService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Table;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -19,13 +22,19 @@ public class MobileController {
         return mobileService.addNewMobile(mobile);
     }
 
-    @PutMapping("/mobile/{mobileId}/app/{appId}")
-    public ResponseEntity<Mobile> addAppToMobile(@PathVariable Long mobileId, @PathVariable Long appId) {
-        return mobileService.addAppToMobile(mobileId, appId);
-    }
-
-    @GetMapping("/mobile")
+    @GetMapping("/mobiles")
     public ResponseEntity<List<Mobile>> getAllMobiles() {
         return mobileService.getAllMobiles();
     }
+
+    @GetMapping("/mobile/app")
+    public ResponseEntity<HashMap<String, List<String>>> showMobilesAndTheirApps() {
+        return mobileService.showMobilesAndTheirApps();
+    }
+
+    @GetMapping("/mobile")
+    public ResponseEntity<HashMap<String, List<String>>> showMobileNameAndAppsByCompany(@RequestParam String mobileCompany) {
+        return mobileService.showMobileNameAndAppsByCompany(mobileCompany);
+    }
+
 }
