@@ -49,4 +49,8 @@ public class MobileController {
         return mobileService.addNewPurchasedMobile(purchase);
     }
 
+    @PutMapping("/mobile/{mobileId}")
+    public ResponseEntity<Mobile> addMobileSpecs(@PathVariable Long mobileId, @RequestParam int memoryAmtInGigs, @RequestParam boolean hotSpot) {
+        return mobileService.addMobileSpecs(mobileId, memoryAmtInGigs, hotSpot);
+    }
 }

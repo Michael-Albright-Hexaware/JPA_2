@@ -1,9 +1,6 @@
 package com.albright.ms.JPA_2.serviceImpl;
 
-import com.albright.ms.JPA_2.entity.App;
-import com.albright.ms.JPA_2.entity.Lease;
-import com.albright.ms.JPA_2.entity.Mobile;
-import com.albright.ms.JPA_2.entity.Purchase;
+import com.albright.ms.JPA_2.entity.*;
 import com.albright.ms.JPA_2.repository.AppRepository;
 import com.albright.ms.JPA_2.repository.MobileRepository;
 import com.albright.ms.JPA_2.service.MobileService;
@@ -108,6 +105,21 @@ public class MobileServiceImpl implements MobileService {
         try {
             Purchase newPurchase = mobileRepository.save(new Purchase(purchase.getMobileCompany(), purchase.getMobileName(), purchase.getPurchasedPrice()));
             return new ResponseEntity<>(purchase, HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Mobile> addMobileSpecs(Long mobileId, int memoryAmtInGigs, boolean hotSpot) {
+        try {
+            if(mobileRepository.findById(mobileId).isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            Mobile updateMobile = mobileRepository.findById(mobileId).get();
+            updateMobile.setMobileSpecs(new MobileSpecs(memoryAmtInGigs, hotSpot));
+            mobileRepository.save(updateMobile);
+            return new ResponseEntity<>(updateMobile, HttpStatus.OK);
         } catch(Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

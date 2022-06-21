@@ -1,10 +1,7 @@
 package com.albright.ms.JPA_2.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -15,12 +12,10 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 // SINGLE_TABLE-> *BEST FOR PERFORMANCE* *SOME COLUMNS CAN BE NULL :(* one table holds all mobiles
 // TABLE_PER_CLASS-> *REPEATING COLUMNS, DON'T USE** splits up purchase and lease to their own tables
 // JOINED-> *BEST FOR DATA INTEGRITY* ALL VALUES ARE ONLY PRESENT ONCE, ALL COLUMNS CAN BE NULLABLE = FALSE
@@ -67,6 +62,8 @@ public class Mobile {
     @UpdateTimestamp
     private LocalDateTime lastUpdatedDate;
 
+    @Embedded
+    private MobileSpecs mobileSpecs;
 
     public Mobile(String mobileCompany, String mobileName) {
         this.mobileCompany = mobileCompany;

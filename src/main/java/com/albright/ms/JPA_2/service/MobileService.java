@@ -24,4 +24,6 @@ public interface MobileService {
     ResponseEntity<Lease> addNewLeasedMobile(@RequestBody Lease lease);
 
     ResponseEntity<Purchase> addNewPurchasedMobile(@RequestBody Purchase purchase);
+
+    ResponseEntity<Mobile> addMobileSpecs(@PathVariable Long mobileId, @RequestParam int memoryAmtInGigs, @RequestParam boolean hotSpot);
 }
