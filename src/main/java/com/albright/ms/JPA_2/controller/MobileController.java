@@ -1,6 +1,8 @@
 package com.albright.ms.JPA_2.controller;
 
+import com.albright.ms.JPA_2.entity.Lease;
 import com.albright.ms.JPA_2.entity.Mobile;
+import com.albright.ms.JPA_2.entity.Purchase;
 import com.albright.ms.JPA_2.service.MobileService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,16 @@ public class MobileController {
     @GetMapping("/mobile")
     public ResponseEntity<HashMap<String, List<String>>> showMobileNameAndAppsByCompany(@RequestParam String mobileCompany) {
         return mobileService.showMobileNameAndAppsByCompany(mobileCompany);
+    }
+
+    @PostMapping("/mobile/lease")
+    public ResponseEntity<Lease> addNewLeasedMobile(@RequestBody Lease lease) {
+        return mobileService.addNewLeasedMobile(lease);
+    }
+
+    @PostMapping("/mobile/purchase")
+    public ResponseEntity<Purchase> addNewPurchasedMobile(@RequestBody Purchase purchase) {
+        return mobileService.addNewPurchasedMobile(purchase);
     }
 
 }

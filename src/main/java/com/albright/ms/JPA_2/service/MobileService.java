@@ -1,6 +1,8 @@
 package com.albright.ms.JPA_2.service;
 
+import com.albright.ms.JPA_2.entity.Lease;
 import com.albright.ms.JPA_2.entity.Mobile;
+import com.albright.ms.JPA_2.entity.Purchase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,4 +20,8 @@ public interface MobileService {
 
 
     ResponseEntity<HashMap<String, List<String>>> showMobileNameAndAppsByCompany(@RequestParam String mobileCompany);
+
+    ResponseEntity<Lease> addNewLeasedMobile(@RequestBody Lease lease);
+
+    ResponseEntity<Purchase> addNewPurchasedMobile(@RequestBody Purchase purchase);
 }
