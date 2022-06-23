@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface MobileService {
-    ResponseEntity<Mobile> addNewMobile(@RequestBody Mobile mobile);
+//    ResponseEntity<Mobile> addNewMobile(@RequestBody Mobile mobile);
 
     ResponseEntity<List<Mobile>> getAllMobiles();
 

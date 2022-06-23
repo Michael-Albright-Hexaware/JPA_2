@@ -19,10 +19,10 @@ public class MobileController {
     @Autowired
     MobileService mobileService;
 
-    @PostMapping("/mobile")
-    public ResponseEntity<Mobile> addNewMobile(@RequestBody Mobile mobile) {
-        return mobileService.addNewMobile(mobile);
-    }
+//    @PostMapping("/mobile")
+//    public ResponseEntity<Mobile> addNewMobile(@RequestBody Mobile mobile) {
+//        return mobileService.addNewMobile(mobile);
+//    }
 
     @GetMapping("/mobiles")
     public ResponseEntity<List<Mobile>> getAllMobiles() {

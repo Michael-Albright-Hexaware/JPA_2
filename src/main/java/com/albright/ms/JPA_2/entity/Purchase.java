@@ -15,8 +15,8 @@ public class Purchase extends Mobile {
 
     private BigDecimal purchasedPrice;
 
-    public Purchase(String mobileCompany, String mobileName, BigDecimal purchasedPrice) {
-        super(mobileCompany, mobileName);
+    public Purchase(String mobileCompany, String mobileName, BigDecimal purchasedPrice, MobileSpecs mobileSpecs) {
+        super(mobileCompany, mobileName, mobileSpecs);
         this.purchasedPrice = purchasedPrice;
     }
 }

@@ -9,7 +9,7 @@ import javax.persistence.Embeddable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Embeddable
+@Embeddable()
 public class MobileSpecs {
 
     private int memoryAmtInGigs;

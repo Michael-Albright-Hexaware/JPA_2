@@ -9,10 +9,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,15 +42,15 @@ public class MobileServiceImpl implements MobileService {
     }
 
             //  NEW MOBILE
-    @Override
-    public ResponseEntity<Mobile> addNewMobile(@RequestBody Mobile mobile) {
-        try {
-            Mobile newMobile = mobileRepository.save(new Mobile(mobile.getMobileCompany(), mobile.getMobileName()));
-            return new ResponseEntity<>(newMobile, HttpStatus.OK);
-        } catch(Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @Override
+//    public ResponseEntity<Mobile> addNewMobile(@RequestBody Mobile mobile) {
+//        try {
+//            Mobile newMobile = mobileRepository.save(new Mobile(mobile.getMobileCompany(), mobile.getMobileName()));
+//            return new ResponseEntity<>(newMobile, HttpStatus.OK);
+//        } catch(Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
                     // GET ALL MOBILES
     @Override
@@ -91,33 +94,45 @@ public class MobileServiceImpl implements MobileService {
     }
 
     @Override
-    public ResponseEntity<Lease> addNewLeasedMobile(Lease lease) {
+    public ResponseEntity<Lease> addNewLeasedMobile(@RequestBody Lease lease) {
         try {
-            Lease newLease = mobileRepository.save(new Lease(lease.getMobileCompany(), lease.getMobileName(), lease.getLeaseRatePerMonth()));
-            return new ResponseEntity<>(newLease, HttpStatus.OK);
+            Lease newLease = mobileRepository.save(new Lease(lease.getMobileCompany(), lease.getMobileName(), lease.getLeaseRatePerMonth(), lease.getMobileSpecs()));
+
+            //create URI
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(newLease.getId()).toUri();
+
+            new ResponseEntity<>(newLease, HttpStatus.CREATED);
+            return ResponseEntity.created(location).build();
         } catch(Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseEntity<Purchase> addNewPurchasedMobile(Purchase purchase) {
+    public ResponseEntity<Purchase> addNewPurchasedMobile(@RequestBody Purchase purchase) {
         try {
-            Purchase newPurchase = mobileRepository.save(new Purchase(purchase.getMobileCompany(), purchase.getMobileName(), purchase.getPurchasedPrice()));
-            return new ResponseEntity<>(purchase, HttpStatus.OK);
+            Purchase newPurchase = mobileRepository.save(new Purchase(purchase.getMobileCompany(), purchase.getMobileName(), purchase.getPurchasedPrice(), purchase.getMobileSpecs()));
+            return new ResponseEntity<>(newPurchase, HttpStatus.CREATED);
         } catch(Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseEntity<Mobile> addMobileSpecs(Long mobileId, int memoryAmtInGigs, boolean hotSpot) {
+    public ResponseEntity<Mobile> addMobileSpecs(@PathVariable Long mobileId, @RequestParam int memoryAmtInGigs, @RequestParam boolean hotSpot) {
         try {
             if(mobileRepository.findById(mobileId).isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             Mobile updateMobile = mobileRepository.findById(mobileId).get();
-            updateMobile.setMobileSpecs(new MobileSpecs(memoryAmtInGigs, hotSpot));
+            try {
+                updateMobile.setMobileSpecs(new MobileSpecs(memoryAmtInGigs, hotSpot));
+            } catch(Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
             mobileRepository.save(updateMobile);
             return new ResponseEntity<>(updateMobile, HttpStatus.OK);
         } catch(Exception e) {

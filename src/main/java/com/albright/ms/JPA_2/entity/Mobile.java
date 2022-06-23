@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -65,9 +66,10 @@ public class Mobile {
     @Embedded
     private MobileSpecs mobileSpecs;
 
-    public Mobile(String mobileCompany, String mobileName) {
+    public Mobile(String mobileCompany, String mobileName, MobileSpecs mobileSpecs) {
         this.mobileCompany = mobileCompany;
         this.mobileName = mobileName;
+        this.mobileSpecs = new MobileSpecs();
     }
 
     public void addNewApp(App app) {

@@ -14,8 +14,8 @@ import java.math.BigDecimal;
 public class Lease extends Mobile {
     private BigDecimal leaseRatePerMonth;
 
-    public Lease(String mobileCompany, String mobileName, BigDecimal leaseRatePerMonth)  {
-        super(mobileCompany, mobileName);
+    public Lease(String mobileCompany, String mobileName, BigDecimal leaseRatePerMonth, MobileSpecs mobileSpecs)  {
+        super(mobileCompany, mobileName, mobileSpecs);
         this.leaseRatePerMonth = leaseRatePerMonth;
     }
 
